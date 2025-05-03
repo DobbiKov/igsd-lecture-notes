@@ -216,10 +216,10 @@ As we established in our previous conversation and is outlined in the sources, r
   The perspective projection matrix transforms points from the camera’s 3D view space (eye space) into a standardised 3D space called **Normalised Device Coordinates (NDC)**. This transformation is fundamental to creating the perspective effect, where objects appear smaller the further away they are. The sources mention that the projection process projects 3D primitives onto the 2D image space (screen space).
 
 * **View Frustum Parameters:**
-  For a perspective projection, the camera sees a region of space called the **view frustum**. This frustum is shaped like a truncated pyramid. The sources define this frustum using six clipping planes: `left` (l), `right` (r), `bottom` (b), `top` (t), `near` (n), and `far` (f). The near plane (\$z\$-near) and far plane (\$z\$-far) define the boundaries along the depth axis. Objects outside this frustum are clipped (removed).
+  For a perspective projection, the camera sees a region of space called the **view frustum**. This frustum is shaped like a truncated pyramid. The sources define this frustum using six clipping planes: `left` (l), `right` (r), `bottom` (b), `top` (t), `near` (n), and `far` (f). The near plane ($z$-near) and far plane ($z$-far) define the boundaries along the depth axis. Objects outside this frustum are clipped (removed).
 
 * **Mapping to NDC:**
-  The goal of the perspective projection matrix is to map this view frustum into a canonical cube in NDC space. NDC coordinates typically range from \$-1\$ to \$1\$ along each axis. The transformation ensures that points exactly on the near plane (\$z=-n\$ in camera space) map to \$z\_{\text{ndc}}=-1\$, points exactly on the far plane (\$z=-f\$) map to \$z\_{\text{ndc}}=1\$, points on the left plane (\$x=l\$) map to \$x\_{\text{ndc}}=-1\$, points on the right plane (\$x=r\$) map to \$x\_{\text{ndc}}=1\$, points on the bottom plane (\$y=b\$) map to \$y\_{\text{ndc}}=-1\$, and points on the top plane (\$y=t\$) map to \$y\_{\text{ndc}}=1\$.
+  The goal of the perspective projection matrix is to map this view frustum into a canonical cube in NDC space. NDC coordinates typically range from $-1$ to $1$ along each axis. The transformation ensures that points exactly on the near plane ($z=-n$ in camera space) map to $z\_{\text{ndc}}=-1$, points exactly on the far plane ($z=-f$) map to $z\_{\text{ndc}}=1$, points on the left plane ($x=l$) map to $x\_{\text{ndc}}=-1$, points on the right plane ($x=r$) map to $x\_{\text{ndc}}=1$, points on the bottom plane ($y=b$) map to $y\_{\text{ndc}}=-1$, and points on the top plane ($y=t$) map to $y\_{\text{ndc}}=1$.
 
 * **The Matrix Form:**
   The specific matrix provided in the sources achieves this mapping and prepares the coordinates for the perspective divide:
@@ -242,8 +242,8 @@ As we established in our previous conversation and is outlined in the sources, r
     * $\frac{2}{t-b}$ and $\frac{b+t}{t-b}$ map the y-range $[b,t]$ to $[-1,1]$.
     * $-\frac{f+n}{f-n}$ and $-\frac{2fn}{f-n}$ map the z-range $[-f,-n]$ to $[-1,1]$ (camera looks down –Z).
 
-  * **Bottom Row \$(0,0,-1,0)\$:**
-    Causes the homogeneous w-coordinate to become \$-z\_{\text{camera}}\$, so that after multiplication by the matrix the resulting point \$(X\_c, Y\_c, Z\_c, W\_c)\$ satisfies:
+  * **Bottom Row $(0,0,-1,0)$:**
+    Causes the homogeneous w-coordinate to become $-z\_{\text{camera}}$, so that after multiplication by the matrix the resulting point $(X\_c, Y\_c, Z\_c, W\_c)$ satisfies:
 
     $$
     x_{\text{ndc}} = \frac{X_c}{W_c} = \frac{X_c}{-\,z_{\text{camera}}}, 
@@ -253,12 +253,12 @@ As we established in our previous conversation and is outlined in the sources, r
     z_{\text{ndc}} = \frac{Z_c}{W_c}.
     $$
 
-    Dividing by \$-z\_{\text{camera}}\$ implements the foreshortening perspective effect, and \$z\_{\text{ndc}}\$ preserves depth for the Z-buffer.
+    Dividing by $-z\_{\text{camera}}$ implements the foreshortening perspective effect, and $z\_{\text{ndc}}$ preserves depth for the Z-buffer.
 
 #### 2. The Viewport Transformation Matrix (`M_viewport`)
 
 * **Purpose:**
-  The viewport transformation is the final step before rendering to the screen. It takes the 3D point in NDC space $\[-1,1]\$ (after the perspective divide and clipping) and maps its X and Y coordinates to the 2D pixel coordinates \$(u\_m, v\_m)\$ on the screen. It also maps the NDC Z coordinate to a depth value suitable for the depth buffer.
+  The viewport transformation is the final step before rendering to the screen. It takes the 3D point in NDC space $[-1,1]$ (after the perspective divide and clipping) and maps its X and Y coordinates to the 2D pixel coordinates $(u\_m, v\_m)$ on the screen. It also maps the NDC Z coordinate to a depth value suitable for the depth buffer.
 
 * **Screen Parameters:**
   The dimensions of the target display area, typically its `Width` (W) and `Height` (H) in pixels.
@@ -281,7 +281,7 @@ As we established in our previous conversation and is outlined in the sources, r
   \end{pmatrix}
   $$
 
-  When multiplied by \$(x\_{\text{ndc}}, y\_{\text{ndc}}, z\_{\text{ndc}}, 1)\$, the first row yields \$u\_m\$, the second \$v\_m\$, and the third \$z\_{\text{depth}}\$.
+  When multiplied by $(x\_{\text{ndc}}, y\_{\text{ndc}}, z\_{\text{ndc}}, 1)$, the first row yields $u\_m$, the second $v\_m$, and the third $z\_{\text{depth}}$.
 
 In summary, the specific forms and coefficients of these matrices are not arbitrary. They are carefully constructed algebraic representations of the geometric transformations required to map coordinates from one space to another—frustum to NDC, and NDC to screen—implementing the precise scaling, translation, and perspective‐division effects that define the graphics pipeline. The parameters (l, r, b, t, n, f, W, H) define the geometry of the input (frustum) and output (screen) spaces, and the matrix coefficients are derived to perform the exact mapping between them.
 

@@ -1,4 +1,4 @@
-# Question de l'exam
+# Transformation matrix for the rotation around the line from the given points
 
 :::{important} Question 3
 Soit l'axe $\vec{d}$ défini par les deux points $P_1\,(1,\,2,\,-4)$ et $P_2\,(3,\,1,\,7)$. Définir la matrice de transformation de rotation de $45^\circ$ autour de l’axe $\vec{d}$. On exprimera cette matrice sous forme d’un produit de matrices canoniques. Il n’est pas nécessaire d’effectuer les multiplications explicites.
