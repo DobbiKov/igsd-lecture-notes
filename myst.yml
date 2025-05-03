@@ -2,11 +2,17 @@
 version: 1
 project:
   id: a889e744-0d66-400f-ad19-a1b68892e6f3
-  # title:
+  title: "IGSD Lecture Notes"
   # description:
   # keywords: []
-  # authors: []
+  authors: [Yehor KOROTENKO]
   # github:
+  toc:
+    - file: README.md
+    - file: lecture-4-5-gemini.md
+    - file: lecture-6-gemini.md
+    - file: lecture-7-gemini.md
+    - file: methode-du-germe.md
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
   template: book-theme
