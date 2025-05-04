@@ -14,11 +14,13 @@ project:
     - file: lecture-7-gemini.md
     - file: methode-du-germe.md
     - file: cohen-sutherland.md
+    - file: atan2.md
     - title: Exam questions
       children:
       - file: exam_questions/transformation-matrix-for-turning.md
       - file: exam_questions/temp-exo-proj.md
       - file: exam_questions/cohen-sutherland-clipping.md
+      - file: exam_questions/methode-du-germe.md
     - file: visual-explanations.ipynb
   # To autogenerate a Table of Contents, run "myst init --write-toc"
 site:
